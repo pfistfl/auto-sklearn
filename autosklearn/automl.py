@@ -360,7 +360,7 @@ class AutoML(BaseEstimator):
         # == Perform dummy predictions
         num_run = 1
         #if self._resampling_strategy in ['holdout', 'holdout-iterative-fit']:
-        num_run = self._do_dummy_prediction(datamanager, num_run)
+        # num_run = self._do_dummy_prediction(datamanager, num_run)
 
         # = Create a searchspace
         # Do this before One Hot Encoding to make sure that it creates a

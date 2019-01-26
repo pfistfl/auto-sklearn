@@ -36,7 +36,7 @@ class EnsembleBuilder(multiprocessing.Process):
             ensemble_nbest: int=100,
             seed: int=1,
             shared_mode: bool=False,
-            max_iterations: int=1,
+            max_iterations: int=None,
             precision: str="32",
             sleep_duration: int=2,
             memory_limit: int=1000,
@@ -182,6 +182,11 @@ class EnsembleBuilder(multiprocessing.Process):
                                  iteration)
                 break
 
+            # break if ensemble_nbest models are loaded.
+            if (np.sum([pred["loaded"] > 0 for pred in self.read_preds.values()]) == self.ensemble_nbest):
+                self.logger.debug('Loaded all 5 models')
+                break
+
             used_time = time.time() - self.start_time
             self.logger.debug(
                 'Starting iteration %d, time left: %f',
@@ -231,7 +236,7 @@ class EnsembleBuilder(multiprocessing.Process):
                              index_run=iteration)
                 iteration += 1
             else:
-                break
+                time.sleep(self.sleep_duration)
 
     def read_ensemble_preds(self):
         """
