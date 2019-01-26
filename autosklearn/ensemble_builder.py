@@ -36,7 +36,7 @@ class EnsembleBuilder(multiprocessing.Process):
             ensemble_nbest: int=100,
             seed: int=1,
             shared_mode: bool=False,
-            max_iterations: int=None,
+            max_iterations: int=1,
             precision: str="32",
             sleep_duration: int=2,
             memory_limit: int=1000,
@@ -231,7 +231,7 @@ class EnsembleBuilder(multiprocessing.Process):
                              index_run=iteration)
                 iteration += 1
             else:
-                time.sleep(self.sleep_duration)
+                break
 
     def read_ensemble_preds(self):
         """
