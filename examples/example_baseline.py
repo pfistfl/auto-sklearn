@@ -8,7 +8,7 @@ import sklearn.model_selection
 import sklearn.datasets
 import sklearn.metrics
 
-import autosklearn.classification
+import autosklearn.classification as cl
 
 
 
@@ -22,13 +22,13 @@ def main():
     X_train, X_test, y_train, y_test = \
         sklearn.model_selection.train_test_split(X, y, random_state=1)
 
-    automl = autosklearn.classification.AutoSklearnClassifier(
+    automl = cl.AutoSklearnClassifier(
         time_left_for_this_task=60,
         per_run_time_limit=30,
         ensemble_nbest=5,
         ensemble_size=1,
         initial_configurations_via_metalearning=5,
-        include_estimators=['random_forest'],
+        include_estimators=['gradient_boosting'],
         include_preprocessors=['no_preprocessing'],
         tmp_folder='/home/flo/autosklearn_holdout_example_tmp',
         smac_scenario_args={'runcount_limit': 5},

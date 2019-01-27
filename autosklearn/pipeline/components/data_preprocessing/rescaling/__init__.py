@@ -44,7 +44,7 @@ class RescalingChoice(AutoSklearnChoice):
                 "No rescalers found, please add any rescaling component.")
 
         if default is None:
-            defaults = ['standardize', 'none', 'minmax', 'normalize']
+            defaults = ['standardize'] # ['standardize', 'none', 'minmax', 'normalize']
             for default_ in defaults:
                 if default_ in available_preprocessors:
                     default = default_

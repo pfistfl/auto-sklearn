@@ -14,7 +14,7 @@ from autosklearn.util.common import check_for_bool, check_none
 
 
 class OneHotEncoder(AutoSklearnPreprocessingAlgorithm):
-    def __init__(self, use_minimum_fraction=True, minimum_fraction=0.01,
+    def __init__(self, use_minimum_fraction=False, minimum_fraction=0.01,
                  categorical_features=None, random_state=None):
         # TODO pay attention to the cases when a copy is made (CSR matrices)
 
@@ -85,7 +85,7 @@ class OneHotEncoder(AutoSklearnPreprocessingAlgorithm):
     def get_hyperparameter_search_space(dataset_properties=None):
         cs = ConfigurationSpace()
         use_minimum_fraction = CategoricalHyperparameter(
-            "use_minimum_fraction", ["True", "False"], default_value="True")
+            "use_minimum_fraction", ["True", "False"], default_value="False")
         minimum_fraction = UniformFloatHyperparameter(
             "minimum_fraction", lower=.0001, upper=0.5, default_value=0.01, log=True)
         cs.add_hyperparameters([use_minimum_fraction, minimum_fraction])
