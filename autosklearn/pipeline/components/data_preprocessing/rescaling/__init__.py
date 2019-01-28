@@ -38,22 +38,30 @@ class RescalingChoice(AutoSklearnChoice):
         available_preprocessors = self.get_available_components(
             dataset_properties=dataset_properties,
             include=include, exclude=exclude)
+        available_preprocessors.popitem('')
 
         if len(available_preprocessors) == 0:
             raise ValueError(
                 "No rescalers found, please add any rescaling component.")
 
         if default is None:
-            defaults = ['standardize'] # ['standardize', 'none', 'minmax', 'normalize']
+            defaults = ['standardize']  # ['standardize', 'none', 'minmax', 'normalize']
             for default_ in defaults:
                 if default_ in available_preprocessors:
                     default = default_
                     break
 
+        # Drop some preprocessors, only standardize
+        for item in ['none', 'normalize', 'quantile_transformer', 'robust_scaler']:
+            available_preprocessors.pop(item)
+
         preprocessor = CategoricalHyperparameter('__choice__',
                                                  list(
                                                      available_preprocessors.keys()),
                                                  default_value=default)
+
+
+
         cs.add_hyperparameter(preprocessor)
         for name in available_preprocessors:
             preprocessor_configuration_space = available_preprocessors[name]. \
